@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: social
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/social
+    hikari:
+      keepalive-time: 60000
+  jpa:
+    open-in-view: true
+  flyway:
+    locations: classpath:migration
+  jackson:
+    default-property-inclusion: non_empty
+  jmx:
+    enabled: true
+
+server:
+  port: 8087
+  shutdown: graceful
+  forward-headers-strategy: framework
+
+app:
+  jwt:
+    expiration-ms: 1_800_000

@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "a3bb65e4-cb95-411a-8a5b-7ab8dc2557c2",
+		"name": "Social",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10242205"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"user_id\", jsonData[\"user_id\"]);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(pm.request.body);\r",
+							"pm.environment.set(\"password\", jsonData[\"password\"]);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"123456\",\r\n    \"first_name\": \"John\",\r\n    \"second_name\": \"Smith\",\r\n    \"birthday\": \"1980-10-26\",\r\n    \"biography\": \"reading, surfing\",\r\n    \"city\": \"Rolly\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8087/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"Bearer_token\", jsonData[\"token\"]);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "{{user_id}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8087/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8087/user/get/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"user",
+						"get",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
