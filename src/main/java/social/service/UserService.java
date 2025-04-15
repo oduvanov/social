@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import social.entity.UserProfile;
 import social.repository.UserRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,5 +35,9 @@ public class UserService implements UserDetailsService {
         userRepository.findUserById(userProfile.getId())
                 .ifPresent(u -> {throw new IllegalArgumentException("Username already exists");});
         return userRepository.save(userProfile);
+    }
+
+    public List<UserProfile> searchUsers(String firstNamePath, String lastNamePath) {
+        return userRepository.searchUserProfile(firstNamePath, lastNamePath);
     }
 }

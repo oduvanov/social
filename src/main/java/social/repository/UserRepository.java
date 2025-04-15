@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import social.entity.UserProfile;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,4 +23,10 @@ public interface UserRepository extends JpaRepository<UserProfile, String> {
     @Modifying
     UserProfile saveUser(UserProfile user);
 
+    @Query(value = """
+            SELECT * FROM user_profile 
+            WHERE first_name LIKE :firstNamePath% AND second_name LIKE :lastNamePath%
+            ORDER BY id""",
+            nativeQuery = true)
+    List<UserProfile> searchUserProfile(String firstNamePath, String lastNamePath);
 }

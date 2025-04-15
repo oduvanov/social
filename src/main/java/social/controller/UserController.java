@@ -1,5 +1,6 @@
 package social.controller;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -8,13 +9,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import social.entity.UserProfile;
 import social.mapper.UserMapper;
 import social.model.AuthResult;
@@ -24,6 +20,7 @@ import social.model.RegisterRequest;
 import social.service.UserService;
 import social.utils.JwtUtils;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -57,5 +54,14 @@ public class UserController {
         UserProfile userProfile = userService.findUserById(id);
         UserDto dto = userMapper.toDto(userProfile);
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping(path = "/user/search")
+    public ResponseEntity<List<UserDto>> searchUser(@RequestParam("first_name") @NotBlank String firstNamePath,
+                                                    @RequestParam("last_name") @NotBlank String lastNamePath) {
+        List<UserDto> dtos = userService.searchUsers(firstNamePath, lastNamePath).stream()
+                .map(userMapper::toDto)
+                .toList();
+        return ResponseEntity.ok(dtos);
     }
 }
