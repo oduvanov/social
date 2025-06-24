@@ -5,7 +5,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
-    url: jdbc:postgresql://localhost:5432/social
+    url: jdbc:postgresql://localhost:5433/social
     hikari:
       keepalive-time: 60000
   jpa:

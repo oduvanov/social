@@ -145,6 +145,46 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Search of users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Bearer_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/user/search?first_name=Дани&last_name=Абр",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"user",
+								"search"
+							],
+							"query": [
+								{
+									"key": "first_name",
+									"value": "Дани"
+								},
+								{
+									"key": "last_name",
+									"value": "Абр"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

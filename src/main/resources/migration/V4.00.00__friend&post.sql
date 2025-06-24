@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS friend1
+CREATE TABLE IF NOT EXISTS friend
 (
     user_id UUID NOT NULL,
     friend_id UUID NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS friend1
     CONSTRAINT friend_friend_id_fk FOREIGN KEY (friend_id) REFERENCES user_profile (id)
 );
 
-CREATE TABLE IF NOT EXISTS post2
+CREATE TABLE IF NOT EXISTS post
 (
     id UUID NOT NULL PRIMARY KEY,
     text TEXT NOT NULL,
